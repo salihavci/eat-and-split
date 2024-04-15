@@ -46,6 +46,19 @@ function App() {
     setIsShowAddFriend(false);
   }
 
+  function handleSplitBill(value) {
+    setFriends((friends) =>
+      friends.map((friend) =>
+        friend.id === selectedFriends.id
+          ? { ...friend, balance: friend.balance + value }
+          : friend
+      )
+    );
+
+    setSelectedFriends(null);
+    setIsShowAddFriend(false);
+  }
+
   return (
     <div className="app">
       <div className="sidebar">
@@ -59,7 +72,12 @@ function App() {
           {isShowAddFriend ? `Close` : `Add Friends`}
         </Button>
       </div>
-      {selectedFriends && <BillContainer selectedFriend={selectedFriends} />}
+      {selectedFriends && (
+        <BillContainer
+          selectedFriend={selectedFriends}
+          handleSplitBill={handleSplitBill}
+        />
+      )}
     </div>
   );
 }
